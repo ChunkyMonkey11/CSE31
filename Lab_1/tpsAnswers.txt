@@ -1,0 +1,32 @@
+TPS Part 1 
+1. Revant,Saketh Bandi,Channu Ollalu, Rudra Mukherjee
+2. https://www.youtube.com/watch?v=s3ii48qYBxA, https://www.youtube.com/watch?v=aKRYQsKR46I, https://www.youtube.com/watch?v=4Gpls24j5Gw
+3. Shared it
+4. bookmarked
+------------------------------------------
+TPS Part 2
+1.How can you open a terminal from your Linux/Mac/Windows computer?
+  a. Search up the terminal in the search bar(Mac,Linux), Powershell for Windows.
+  b. Yes, because I have done it before.
+
+2. Use the "ls" code
+3. cd "Desktop"
+4. mkdir "CSE31" && 
+
+------------------------------------------
+TPS Part 3
+1. https://www.wikihow.com/Compile-a-C-Program-Using-the-GNU-Compiler-(GCC) ,https://www.geeksforgeeks.org/linux-unix/gcc-command-in-linux-with-examples/
+2.done
+3. gcc "Filename" e.g your_code.c -o my_program then ./my_program
+4. The absence of error messages in the terminal output. As well as seeing an output file. 
+5. Says not to run the linker (Tells the compiler to preserve comments)
+6. Tells Gcc to include debugging information in the compiled output. (Allows us to see source code lines, set breakpoints, inspect variable, step through code.)
+7. gcc main.c -0 "desired output file name"
+8. Goes through compile stages (preprocess -> compile -> assemble -> link) then provides an executable.
+9. "./a.output"
+-------------------------------------------------------------------------------------
+
+
+
+
+
