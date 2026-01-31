@@ -1,0 +1,34 @@
+TPS 4
+------
+intialize variables:
+- even_count
+- even_sum
+- odd_count
+- odd_sum
+- count : starts at 1
+
+run a while loop that until broken will run:
+run some if statements that print what number will be entred based on count value(goes up till 7)
+
+create a variable number which will be used to store the input number from the user.(Can assume only integers)
+create a temp variable which is copy of number and will be used to calculate the digit sum
+
+if number == 0: break the while loop.(exit condition)
+if number is negative (<0): we will make temp the positive of that number
+
+then run a while temp > 0 loop:
+    create a var called digit which is equal to temp%10: this operation gives us the last digit of temp:
+        - If the last digit is 0 then 0 will be returned if it is not we will get that digit.
+    add that digit to digit_sum. 
+    then divide temp by 10 which will handle rounding.
+
+after that loop exits:
+    - Check if the sum of the digits is even:
+        -if even : even_count + 1, and even_sum + the original number being checked.
+        -if odd : same process as above for odd. 
+
+
+now the original loop is over. 
+if the even count is not 0 we print the average of input values which sum to an even : even average
+
+if the odd count is not 0 we print the average of input values which sum to an odd number: odd-average
