@@ -31,31 +31,19 @@ int main(){
            int odd_count = 0;
            int odd_sum = 0;
            int count = 1;
-            /* Limit to at most 7 inputs as described in the assignment. */
-            while(count <= 7){
-                if(count == 1){
-                    printf("Enter the 1st value: ");
-                } 
- 
-                if(count == 2){
-                    printf("Enter the 2nd value: ");
-                 }
-                if(count == 3){
-                    printf("Enter the 3rd value: ");
-                 }
+            /* Loop until the user enters 0 or invalid input. */
+            while(1){
+                const char *suffix;
+                if (count % 10 == 1 && count % 100 != 11)
+                    suffix = "st";
+                else if (count % 10 == 2 && count % 100 != 12)
+                    suffix = "nd";
+                else if (count % 10 == 3 && count % 100 != 13)
+                    suffix = "rd";
+                else
+                    suffix = "th";
 
-                if(count == 4){
-                    printf("Enter the 4th value: ");
-                 }
-                 if(count == 5){
-                    printf("Enter the 5th value: ");
-                 }
-                 if(count == 6){
-                    printf("Enter the 6th value: ");
-                 }
-                 if(count == 7){
-                    printf("Enter the 7th value: ");
-                 }
+                printf("Enter the %d%s value: ", count, suffix);
                       int number;
                       int rc = scanf("%d", &number);
                       /* If input is not an integer or EOF, stop reading. */
@@ -93,15 +81,20 @@ int main(){
                 }
                 // When the exit condition is met compute and print averages only when counts are nonzero.
                 printf("\n");
-                if(even_count != 0){
-                    float even_avg = (float)even_sum / even_count;
-                    /* Use %g to print the float with the minimal required digits (no unnecessary trailing zeros).
-                       %g uses up to 6 significant digits by default and removes trailing zeros/decimal point. */
-                    printf("Average of input values whose digits sum up to an even number: %g\n", even_avg);
+                if(even_count == 0 && odd_count == 0){
+                    printf("There is no average to compute.\n");
                 }
-                if(odd_count != 0){
-                    float odd_avg = (float)odd_sum / odd_count;
-                    printf("Average of input values whose digits sum up to an odd number: %g\n", odd_avg);
+                else{
+                    if(even_count != 0){
+                        float even_avg = (float)even_sum / even_count;
+                        /* Use %g to print the float with the minimal required digits (no unnecessary trailing zeros).
+                           %g uses up to 6 significant digits by default and removes trailing zeros/decimal point. */
+                        printf("Average of input values whose digits sum up to an even number: %g\n", even_avg);
+                    }
+                    if(odd_count != 0){
+                        float odd_avg = (float)odd_sum / odd_count;
+                        printf("Average of input values whose digits sum up to an odd number: %g\n", odd_avg);
+                    }
                 }
 
             // Run a final formatting check to make sure this is complete. 

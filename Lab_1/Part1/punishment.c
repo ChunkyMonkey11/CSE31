@@ -33,7 +33,7 @@ int main() {
 
             int c;
             while ((c = getchar()) != '\n' && c != EOF) {
-                ; // discard rest of line
+                 // discard rest of line
             }
         }
     }
