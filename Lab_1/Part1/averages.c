@@ -34,11 +34,11 @@ int main(){
             /* Loop until the user enters 0 or invalid input. */
             while(1){
                 const char *suffix;
-                if (count % 10 == 1 && count % 100 != 11)
+                if (count % 10 == 1 && count % 100 != 11) // if the number ends in 1 but not in 11 use st.
                     suffix = "st";
-                else if (count % 10 == 2 && count % 100 != 12)
+                else if (count % 10 == 2 && count % 100 != 12) //If the number ends in 2, but not 12, use nd
                     suffix = "nd";
-                else if (count % 10 == 3 && count % 100 != 13)
+                else if (count % 10 == 3 && count % 100 != 13)//If the number ends in **3**, but not 13, use rd
                     suffix = "rd";
                 else
                     suffix = "th";

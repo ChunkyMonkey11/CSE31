@@ -1,0 +1,10 @@
+Assignment 2:
+1. When running the program with "HELLO!" (str1) and "hello!" (str2), the output is NOT expected. The program likely prints garbage characters after "HELLO!hello!" or crashes with a segmentation fault. This happens for two reasons:
+   - The `str1` array is only size 10, but "HELLO!" + "hello!" is 12 characters, causing a buffer overflow.
+   - The `append` function does not add a null terminator (`\0`) to the end of the new string, so `printf` continues reading memory until it hits a random zero or crashes.
+
+2. When running with "HI!" and "hi!", the output is also NOT expected (it likely prints "HI!hi!" followed by garbage characters). The bug here is that the `append` function does not add a null terminator to the resulting string.
+   To fix this, add the line `s1[s1len + s2len] = '\0';` inside the `append` function (after the loop).
+   (Note: The buffer overflow issue from Q1 is separate; "HI!" + "hi!" fits within the 10-char limit, so this case isolates the missing null terminator bug).
+
+3. When running with "Hello! How are you?" and "I am fine, thank you!", the output is NOT expected (likely a crash or garbage). This happens because of a massive buffer overflow. The input strings are much larger than the 10-character arrays `str1` and `str2`. Since `scanf("%[^\n]...", ...)` does not limit the number of characters read, it writes past the end of the arrays, overwriting other variables on the stack (like `str2`, return addresses, etc.), causing undefined behavior and crashes.

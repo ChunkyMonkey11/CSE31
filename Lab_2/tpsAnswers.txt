@@ -1,0 +1,40 @@
+TPS Part 1 
+1. Revant,Saketh Bandi,Channu Ollalu, Aarav Sharma
+2. https://www.onlinegdb.com/, https://lldb.llvm.org/, and https://www.geeksforgeeks.org/c/gdb-step-by-step-introduction/
+3. Shared it
+4. bookmarked
+
+
+TPS Activity 2:
+1. To compile `punishment.c` for debugging, you need to use the `-g` flag, which includes extra debugging information. The command would be `gcc -g -o punish punishment.c`.
+
+2. Once compiled, you load the program into the debugger by typing its name followed by your executable's name. On a Mac, you would type `lldb punish`. On systems with GDB, you'd use `gdb punish`.
+
+3. After loading the program, you start running it by simply typing `run` (or just `r`) at the debugger prompt.
+
+4. Breakpoints are markers that tell the debugger to pause execution at a specific line so you can inspect the program's state. To set one at the start of your loop (let's say line 8), you would type `b 8` (short for break/breakpoint) in either debugger.
+
+5. When the program stops at your breakpoint, you can execute it one line at a time using the `next` command (or `n`). To run the next 3 lines, you would just type `n` three times.
+
+6. To check the value of a variable while the program is paused, you use the `print` command followed by the variable name, like `print myVar` (or `p myVar`). You can do this for any variable to see its current value.
+
+7. If you're done stepping through code line-by-line and want the program to run to completion (or to the next breakpoint), you type `continue` (or `c`).
+
+8. Finally, to exit the debugger session, you simply type `quit` (or `q`).
+
+TPS 3:
+1. Four variables were declared: `x`, `y`, `px`, and `py`. Two of them are pointers: `px` and `py` (both are pointers to integers).
+
+2. The variables `x`, `y`, and `arr[0]` held large, random garbage values (e.g., `x` was 1868443712) because local variables are not automatically cleared when declared; they just take whatever value happens to be in that memory location.
+
+3. You prevent unexpected values by initializing variables when you declare them (e.g., `int x = 0;`). I fixed this in the program by assigning values to `x`, `y`, and the array elements.
+
+4. I added code to print the addresses. For example, `x` was at address `0x16f5e2e08` and `y` was at `0x16f5e2e04`.
+
+5. When I pointed `px` to `x` and `py` to `y`, the value of `px` became exactly the address of `x`, and `py` became the address of `y`. We verified this by printing them out.
+
+6. Yes, we can treat the array name as a pointer. I wrote a loop using `*(arr + i)` instead of `arr[i]`, and it correctly printed the array contents (0, 10, 20, etc.).
+
+7. Array names act like pointers to their first element. The code confirmed that `arr` holds the exact same memory address as `&arr[0]`.
+
+8. The address of the array itself (`&arr`) is the same as the address of its first element. This makes sense because the array is a contiguous block of memory, so the starting point of the whole block is the same as the starting point of the first item.
