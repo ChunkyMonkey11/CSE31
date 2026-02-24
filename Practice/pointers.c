@@ -3,9 +3,22 @@
 
 // Pointers as function arguments - call by reference.
 
+/*
+ -If we don't define a variable inside a function in c/c++ then the variable is a global variable which can be accessed anywhere and modifed anywhere in the code.
+ - Local variables can be accessed and modifed within a particular code block || All local variables live within the stack. 
+*/
 
+// The a in this function has a different address then the a in main. 
+int Increment(int a){
+    a = a + 1;
+    printf(" Address of variable a in increment = %d\n", &a);
+}
 
-
+int main(){
+    int a = 5;
+    Increment(a);
+    printf("Address of variable a in main = %d", &a);
+}
 
 
 
