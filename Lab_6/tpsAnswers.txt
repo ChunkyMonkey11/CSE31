@@ -1,0 +1,55 @@
+CSE31 Lab 06 - TPS Answers
+
+Name: Revant Patel
+Date: Apr, 2,2026
+
+TPS 1
+1. In default MARS layout, Text Segment starts at `0x00400000` and Data Segment starts at `0x10010000`.
+2. Source code may contain pseudoinstructions; Basic code shows actual instructions that map directly to machine code. One Source line can expand into multiple Basic lines.
+3. The address difference between consecutive Data Segment rows is `0x20` bytes (32 bytes).
+4. There are 8 columns per row (8 words shown per row).
+5. Each column is 4 bytes, so `8 × 4 = 32` bytes = `0x20`, which matches the row address jump.
+6. Add in `.data`: `m: .word 20`
+7. If `n` is first, then `m` is at `0x10010004`.
+8. Example declaration: `str1: .asciiz "I love CSE31!"`
+9. In this setup, `str1` begins after prior words and appears across three visible word addresses in the Data Segment (character bytes), with a null terminator byte as part of `.asciiz` storage.
+10. Yes. The characters are stored as consecutive ASCII bytes in memory (with null terminator), consistent with character-array storage from Lab 04.
+11. Print `str1` with syscall 4:
+   `la $a0, str1`
+   `li $v0, 4`
+   `syscall`
+12. `la $t3, n` loads the address of label `n` into `$t3`, not `n`’s value. After that, `lw` is needed to load the value from memory into a register.
+
+TPS 2
+1. MIPS is RISC, so it uses fewer primitive instructions to simplify hardware. Comparisons like `<, >, <=, >=` are built using `slt`, `beq`, and `bne`.
+2. `n: .word 25`
+3. 
+   a. `str1: .asciiz "Less than\n"`
+   b. `str2: .asciiz "Less than or equal to\n"`
+   c. `str3: .asciiz "Greater than\n"`
+   d. `str4: .asciiz "Greater than or equal to\n"`
+4. Read an integer using syscall 5:
+   `li $v0, 5`
+   `syscall`
+   (result is returned in `$v0`)
+5. Less-than logic (`input` in `$t0`, `n` in `$t1`):
+   `slt $t2, $t0, $t1`
+   `beq $t2, $zero, skip_lt`
+   print `str1`
+6. Greater-than-or-equal logic:
+   `slt $t2, $t0, $t1`   # true only when input < n
+   `bne $t2, $zero, skip_ge`
+   print `str4`
+7. Greater-than logic:
+   `slt $t2, $t1, $t0`   # true only when input > n
+   `beq $t2, $zero, skip_gt`
+   print `str3`
+8. Less-than-or-equal logic:
+   `slt $t2, $t1, $t0`   # true only when input > n
+   `bne $t2, $zero, skip_le`
+   print `str2`
+
+Collaboration: Aarav Sharma, Saketh Bahndi, Chanu Ollalu
+Given help to: Aarav Sharma, Saketh Bahndi, Chanu Ollalu
+Gotten help from: Aarav Sharma, Saketh Bahndi, Chanu Ollalu
+Collaborated with: Aarav Sharma, Saketh Bahndi, Chanu Ollalu

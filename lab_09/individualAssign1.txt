@@ -1,0 +1,77 @@
+Individual Assignment 1: Conversion in proc2.s
+
+Line #7
+Instruction: addi $s0, $zero, -15
+Type: I-type
+Fields:
+- opcode(addi) = 0x08
+- rs = $zero = 0x00
+- rt = $s0 = 0x10
+- immediate = -15 = 0xFFF1 (16-bit two's complement)
+Machine code:
+- Binary: 001000 00000 10000 1111111111110001
+- 32-bit binary: 00100000000100001111111111110001
+- Hex: 0x2010FFF1
+Back to MIPS:
+- opcode 0x08 => addi
+- rs=0x00->$zero, rt=0x10->$s0, imm=0xFFF1=-15
+- Result: addi $s0, $zero, -15
+
+Line #14
+Instruction: slt $t0, $s0, $s1
+Type: R-type
+Fields:
+- opcode = 0x00
+- rs = $s0 = 0x10
+- rt = $s1 = 0x11
+- rd = $t0 = 0x08
+- shamt = 0x00
+- funct(slt) = 0x2A
+Machine code:
+- Binary: 000000 10000 10001 01000 00000 101010
+- 32-bit binary: 00000010000100010100000000101010
+- Hex: 0x0211402A
+Back to MIPS:
+- opcode=0 => R-type, funct=0x2A => slt
+- rs=$s0, rt=$s1, rd=$t0
+- Result: slt $t0, $s0, $s1
+
+Line #17
+Instruction: beq $t0, $zero, LEEQ
+Type: I-type
+Fields:
+- opcode(beq) = 0x04
+- rs = $t0 = 0x08
+- rt = $zero = 0x00
+- immediate = branch offset
+Address/offset steps:
+- beq address = 0x00400014
+- PC + 4 = 0x00400018
+- label LEEQ address = 0x00400030
+- immediate = (0x00400030 - 0x00400018) / 4 = 6 = 0x0006
+Machine code:
+- Binary: 000100 01000 00000 0000000000000110
+- 32-bit binary: 00010001000000000000000000000110
+- Hex: 0x11000006
+Back to MIPS:
+- opcode 0x04 => beq
+- rs=$t0, rt=$zero, offset=6 => target LEEQ
+- Result: beq $t0, $zero, LEEQ
+
+Line #20
+Instruction: j GRT
+Type: J-type
+Fields:
+- opcode(j) = 0x02
+- target = (address of GRT) >> 2
+Address steps:
+- GRT address = 0x0040001C
+- target field = 0x0040001C >> 2 = 0x00100007
+Machine code:
+- Binary: 000010 00000100000000000000000111
+- 32-bit binary: 00001000000100000000000000000111
+- Hex: 0x08100007
+Back to MIPS:
+- opcode 0x02 => j
+- target field 0x00100007 => address 0x0040001C (same upper 4 bits from PC+4)
+- Result: j GRT

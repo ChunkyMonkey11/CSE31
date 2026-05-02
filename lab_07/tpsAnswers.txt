@@ -1,0 +1,66 @@
+TPS 1
+1. Procedure/function/method differences:
+   - Procedure: a named block of code that performs a task; may or may not return a value.
+   - Function: usually a procedure that returns a value.
+   - Method: a function/procedure associated with an object/class (OOP), often operating on object state.
+
+2. In normal flow, CPU executes instructions in order. Control changes only with branch/jump/call/return instructions.
+
+3. Equivalent C for proc1.s:
+   int sum(int a, int b) { return a + b; }
+   int main() { int m = 10, n = 5; printf("%d\n", sum(m, n)); }
+   (Saved as proc1.c)
+
+4. Label SUM is at line 20 in proc1.s.
+   The instruction adds the two inputs: $v0 = $a0 + $a1.
+
+5. You can jump with j only if return location is one fixed label.
+   For real procedure calls from multiple call sites, jr $ra is required to return correctly.
+
+6. Return address is saved at line 11 in proc1.s, into register $ra.
+   Initially the code saves 0, which is invalid as a real return address.
+
+7. Running with invalid $ra causes a bad return (invalid program counter / runtime exception).
+
+8. The return target should be the instruction immediately after the call to SUM
+   (the print-result instruction in MAIN; address seen in Text Segment, typically 0x00400020 before pseudo-expansion changes).
+
+9. After manually changing the saved address and re-assembling, the address can shift.
+   Reason: pseudo-instruction expansion can change instruction layout, so previously observed addresses may move.
+
+10. New return address is the updated address after re-assembly (commonly 0x00400024 after expansion).
+    Program output after correct fix is: 15
+
+11. Use jal to call procedures; it automatically stores the return address in $ra.
+
+12. Modified code uses jal SUM and comments out manual $ra loading line.
+
+
+TPS 2
+1. Output of proc2.c: 38
+
+2. MAIN in proc2.s does:
+   - Load x into $s0 and y into $s1
+   - Call SUM(x)
+   - Compute y = y + x + SUM(x)
+   - Print y
+
+3. SUM knows where to return because MAIN used jal SUM (stores return address in $ra).
+   When SUM calls SUB with jal SUB, $ra is overwritten, so SUM would lose MAIN return address unless backed up.
+   Fix: save $ra in SUM prologue, restore in SUM epilogue.
+
+4. SUM's input n is in $a0, but $a0 is reused to pass SUB argument.
+   Fix: backup original $a0 before jal SUB (stack preferred), restore after return.
+
+5. Line 24 (lw $s0, 0($t0)) overwrites caller's $s0 from MAIN.
+   This is a problem because $s registers are callee-saved by convention.
+   Fix: save $s0 in SUM prologue and restore before returning.
+
+6. SUM must backup 3 values before calling SUB:
+   - $ra (return to MAIN)
+   - original $a0 (n)
+   - $s0 (caller's saved register)
+   Then restore all three in epilogue.
+   (Implemented in proc2.s)
+
+Worked with Saketh, Aarav, Channuwh

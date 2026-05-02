@@ -1,0 +1,27 @@
+TPS 1
+1. MARS stands for MIPS Assembler and Runtime Simulator.
+2. In MARS I load a file by clicking File -> Open, then choosing the .asm/.s file.
+3. I open the file, click Assemble, then click Run (green play button) to execute it.
+4. No, you can't really run it before assembling. MARS needs to assemble first or it won't execute correctly.
+5a. Load file with File -> Open.
+5b. Assemble by pressing the Assemble button.
+5c. Run using the Run/Go button.
+5d. No, program has to be assembled first.
+5e. Use Step (single-step) to run line by line.
+5f. Use Reset, then Run again.
+6. We loaded and ran myFirstExample.s, then watched register values update in Execute.
+
+TPS 2
+1. .data is where variables/data are stored, .word is used to store integer word values, and .text is where instructions/code go.
+2. Line 10 (`beq $t3, $0, finish`) checks if loop counter is 0 and if yes branches to finish.
+3. Line 15 (`j fib`) jumps back to the fib label to keep looping.
+4. In Execute tab, click the checkbox/breakpoint column next to the line (line 15). Then run, and it stops there.
+5. After breakpoint stop, press Run/Go to continue, or press Step to go instruction by instruction.
+6. Register contents are shown in the Registers pane. You can double click a value to manually edit it while testing.
+7. `n` is stored at data segment start address `0x10010000` in this program. For the 13th Fibonacci number, result is 233.
+8. `syscall` is how MIPS asks simulator/OS to do services like print or exit. Put service code in `$v0` (example: 1 = print int, 10 = exit), set needed args like `$a0`, then run `syscall`.
+
+Collaboration
+Given help to: Saketh Bandi, Channu Ollalu, Aarav Sharma
+Gotten help from: Saketh Bandi, Channu Ollalu, Aarav Sharma
+Collaborated with and worked together: Saketh Bandi, Channu Ollalu, Aarav Sharma

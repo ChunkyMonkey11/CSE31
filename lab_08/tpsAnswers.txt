@@ -1,0 +1,79 @@
+CSE31 Lab 08 - TPS Answers
+
+Name: Revant Patel
+Date: Apr 23, 2026
+
+TPS 1
+1. I loaded `fib.s` in MARS and reviewed the loop logic. It starts from `0, 1` and iterates `n` times to print `fib(n)`.
+
+2. To make it generic, `n` should come from user input instead of a fixed value in `.data`.
+
+3. I added a prompt print at the beginning:
+   `li $v0, 4`
+   `la $a0, prompt`
+   `syscall`
+   with `prompt: .asciiz "Please enter a number: "` in `.data`.
+
+4. I used syscall 5 to read an integer and stored it into `$t3`:
+   `li $v0, 5`
+   `syscall`
+   `move $t3, $v0`
+
+5. We no longer need `n: .word 13` for runtime input. I commented out the `n` declaration and also commented out `la/lw` for `n` so input is not overwritten.
+
+6. I tested different values and verified output matches Fibonacci results:
+   input 0 -> 0
+   input 1 -> 1
+   input 7 -> 13
+   input 10 -> 55
+
+
+TPS 2
+1. For input `5`, `recursion.c` returns `29`. During execution it prints several lines of `Returning 1` and `Returning 3`, then final output is `29`.
+
+2. `main` in `recursion.s` sets up stack space, prompts for input, reads integer, passes it in `$a0`, calls `recursion`, and prints returned value.
+
+3. I inserted prompt print instructions so assembly behavior matches C:
+   `Please enter an integer: `
+
+4. Input is read using syscall 5. The value is moved to `$a0` because `$a0` is the argument register used by `jal recursion`.
+
+5. Return value comes back in `$v0`. Print syscall also uses `$v0` for syscall code, so I first save return value to a temp register (ex: `$t0`), then set `$v0=1`, move `$a0=$t0`, and print.
+
+6. Added print sequence after `jal recursion` and before program exit, so returned value is printed correctly.
+
+7. In `recursion`, stack frame reserves 3 integers (12 bytes):
+   - 0($sp): saved `$ra`
+   - 4($sp): saved argument `m` (`$a0`)
+   - 8($sp): saved first recursive return value
+   First thing stored is `$ra`.
+
+8. Base case `m == -1`: set return register `$v0 = 1`.
+
+9. Base case `m == 0`: set return register `$v0 = 3`.
+
+10. We save `$a0` before recursive calls because `$a0` is overwritten when preparing new arguments (`m-2`, `m-1`). We still need original `m` for the second call setup.
+
+11. For first recursive call, update argument:
+   `addi $a0, $a0, -2`
+
+12. After first call, returned value is in `$v0`. If we call recursion again immediately, that value gets overwritten. So store first result to stack (ex: `sw $v0, 8($sp)`), restore original `m`, then prepare second call.
+
+13. For second call, set argument to `m - 1`:
+   `lw $a0, 4($sp)`
+   `addi $a0, $a0, -1`
+
+14. After second call, combine results:
+   `lw $t0, 8($sp)`
+   `add $v0, $t0, $v0`
+   so function returns `recursion(m-2) + recursion(m-1)`.
+
+15. Before `jr $ra`, restore saved return address:
+   `lw $ra, 0($sp)`
+   then pop stack frame and return.
+
+
+Collaboration
+Collaborated with: channu ollalu, saketh bandi, aarav sharma
+Given help to: channu ollalu, saketh bandi, aarav sharma
+Gotten help from: channu ollalu, saketh bandi, aarav sharma
